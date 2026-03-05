@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NutriAdvance Pro | Bio-Performance</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">NUTRI<span>ADVANCE</span></div>
+        <div class="nav-links">
+            <a href="#home">Início</a>
+            <a href="#sobre">Por que nós?</a>
+            <a href="#calculadora">Calculadora</a>
+            <a href="#alimentos">Biblioteca</a>
+            <div class="auth-buttons">
+                <button onclick="openModal('login')" class="btn-login">Entrar</button>
+                <button onclick="openModal('cadastro')" class="btn-nav">Criar Conta</button>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="hero-content">
+            <div class="badge">🚀 O Futuro da sua Nutrição</div>
+            <h1>Pare de tentar dietas que não foram feitas para <span>você</span>.</h1>
+            <p>A maioria das pessoas falha porque segue planos genéricos. O NutriAdvance Pro utiliza algoritmos de bio-performance para decifrar seu metabolismo único. Entregamos a clareza necessária para que cada refeição seja um passo em direção ao seu objetivo, seja ele performance atlética, estética ou longevidade.</p>
+            <div class="hero-actions">
+                <a href="#calculadora" class="btn-primary">Descobrir meus Macros</a>
+                <button onclick="openModal('cadastro')" class="btn-secondary">Começar Grátis</button>
+            </div>
+            <div class="hero-stats">
+                <span><strong>+100</strong> Alimentos Mapeados</span>
+                <span><strong>100%</strong> Baseado em Ciência</span>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?q=80&w=800" alt="Nutrição de Alta Performance">
+        </div>
+    </header>
+
+    <section id="sobre" class="section">
+        <div class="info-container">
+            <div class="info-text">
+                <h2>Por que o NutriAdvance é diferente de tudo o que você já viu?</h2> <br>
+                
+                 <p>O mercado está cheio de soluções "mágicas". Nós acreditamos em **dados**. Nossa plataforma foi desenhada para quem cansou do efeito sanfona e busca um estilo de vida sustentável.</p>
+                
+                
+                <div class="feature-grid">
+                    <div class="feature-item">
+                        <div class="icon"></div>
+                        <br>
+                        <div>
+                            <strong>Individualidade Biológica</strong>
+                            <p>Não somos uma planilha estática. Calculamos sua Taxa Metabólica Basal e Gasto Calórico Total considerando sua rotina real, idade e biotipo.</p>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="feature-item">
+                        <div class="icon"></div>
+                        <div>
+                            <strong>Gestão de Macros Facilitada</strong>
+                            <p>Entenda a proporção de proteínas, gorduras e carboidratos. Saiba exatamente o que ajustar para acelerar a queima de gordura ou a construção de massa magra.</p>
+                        </div>
+                    </div>
+                    <br> 
+                    <div class="feature-item">
+                        <div class="icon"></div>
+                        <div>
+                            <strong>Biblioteca de Densidade Calórica</strong>
+                            <p>Acesse informações nutricionais precisas para fazer substituições inteligentes. Coma o que gosta, mantendo a meta calórica em dia.</p>
+                        </div>
+                    </div>
+                    <br></bt>
+                    <div class="feature-item">
+                        <div class="icon"></div>
+                        <div>
+                            <strong>Educação Nutricional</strong>
+                            <p>Mais que uma calculadora, somos uma ferramenta de aprendizado. Você entende os fundamentos para nunca mais ser refém de dietas restritivas.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="final-cta">
+                    <p>O conhecimento é a única ferramenta capaz de sustentar seus resultados a longo prazo.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="calculadora" class="section bg-light">
+        <div class="section-title">
+            <h2>Calculadora de Bio-Performance</h2>
+            <p>O ponto de partida para sua transformação. Insira seus dados e receba seu diagnóstico.</p>
+        </div>
+        <div class="calc-card">
+            <form id="calc-form">
+                <div class="input-row">
+                    <div class="field"><label>Peso (kg)</label><input type="number" id="peso" placeholder="70" required></div>
+                    <div class="field"><label>Altura (cm)</label><input type="number" id="altura" placeholder="175" required></div>
+                </div>
+                <div class="input-row">
+                    <div class="field"><label>Idade</label><input type="number" id="idade" placeholder="25" required></div>
+                    <div class="field">
+                        <label>Gênero</label>
+                        <select id="genero">
+                            <option value="masculino">Masculino</option>
+                            <option value="feminino">Feminino</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn-full">Gerar Diagnóstico Nutricional</button>
+            </form>
+            <div id="resultado" class="result-display hidden">
+                <div class="res-item"><span>Basal (TMB)</span><strong id="tmb-valor">0</strong><small>kcal</small></div>
+                <div class="res-item highlight"><span>Manutenção</span><strong id="manutencao">0</strong><small>kcal</small></div>
+                <div class="res-item"><span>Perda (Cutting)</span><strong id="perda">0</strong><small>kcal</small></div>
+                <div class="res-item"><span>Ganho (Bulking)</span><strong id="ganho">0</strong><small>kcal</small></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="alimentos" class="section bg-dark">
+        <div class="section-title white">
+            <h2>Biblioteca de Nutrientes</h2>
+            <p class="white-opacity">Consulte a densidade calórica e macros por cada 100g de alimento bruto.</p>
+        </div>
+        <div class="search-container">
+            <input type="text" id="food-search" placeholder="Ex: Salmão, Arroz, Whey, Ovos...">
+            <div id="food-list" class="food-grid"></div>
+        </div>
+    </section>
+
+    <div id="modalAuth" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="formLogin" class="auth-form">
+                <h2>Acessar Conta</h2>
+                <form onsubmit="handleAuth(event, 'Login realizado!')">
+                    <input type="text" id="login-user" placeholder="Usuário" required>
+                    <input type="password" placeholder="Senha" required>
+                    <button type="submit" class="btn-full">Entrar</button>
+                </form>
+            </div>
+            <div id="formCadastro" class="auth-form hidden">
+                <h2>Criar Perfil Grátis</h2>
+                <form onsubmit="handleAuth(event, 'Perfil criado!')">
+                    <input type="text" id="signup-user" placeholder="Nome Completo" required>
+                    <input type="email" placeholder="E-mail" required>
+                    <input type="password" placeholder="Senha" required>
+                    <button type="submit" class="btn-full">Cadastrar Agora</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer"></footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

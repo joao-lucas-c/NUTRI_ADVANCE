@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Controle | NutriAdvance</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sidebar-width: 280px;
+            --accent-blue: #3b82f6;
+            --accent-orange: #f59e0b;
+            --border-color: #e2e8f0;
+            --bg-body: #f8fafc;
+        }
+
+        body { background: var(--bg-body); display: flex; min-height: 100vh; color: var(--text); }
+
+        /* Sidebar Profissional */
+        .sidebar {
+            width: var(--sidebar-width);
+            background: #ffffff;
+            border-right: 1px solid var(--border-color);
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            z-index: 100;
+        }
+
+        .sidebar .logo { font-size: 1.2rem; letter-spacing: -0.5px; margin-bottom: 3rem; color: var(--dark); border-left: 4px solid var(--primary); padding-left: 15px; }
+        .nav-menu { list-style: none; flex-grow: 1; }
+        .nav-item { 
+            padding: 12px 16px; 
+            border-radius: 8px; 
+            margin-bottom: 4px; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+            color: #64748b;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .nav-item:hover, .nav-item.active { background: #f1f5f9; color: var(--dark); }
+        .nav-item.active { color: var(--primary); font-weight: 600; }
+
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            flex-grow: 1;
+            padding: 3rem 4rem;
+            width: calc(100% - var(--sidebar-width));
+        }
+
+        .header-dash { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 3rem; }
+        .header-dash h1 { font-size: 1.8rem; font-weight: 700; letter-spacing: -1px; }
+
+        /* Status Cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-bottom: 2.5rem; }
+        .stat-card { background: white; padding: 1.8rem; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .stat-card h4 { color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+        .stat-card .value { font-size: 1.6rem; font-weight: 700; color: var(--dark); }
+        
+        .progress-container { height: 6px; background: #f1f5f9; border-radius: 10px; margin-top: 15px; overflow: hidden; }
+        .progress-bar { height: 100%; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1); }
+
+        /* Grid Layout */
+        .content-grid { display: grid; grid-template-columns: 1.6fr 1.2fr; gap: 2rem; }
+        .section-card { background: white; border-radius: 16px; padding: 2rem; border: 1px solid var(--border-color); }
+        .section-card h3 { margin-bottom: 20px; font-size: 1.1rem; font-weight: 700; color: var(--dark); border-bottom: 1px solid #f1f5f9; padding-bottom: 15px; }
+
+        /* Meal List Clean */
+        .meal-item { 
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 16px 0; border-bottom: 1px solid #f1f5f9;
+        }
+        .meal-item:last-child { border-bottom: none; }
+        .meal-info strong { display: block; font-size: 0.95rem; color: var(--dark); }
+        .meal-info small { color: #94a3b8; font-size: 0.85rem; }
+        .meal-calories { font-size: 0.9rem; font-weight: 600; color: var(--primary); background: #ecfdf5; padding: 4px 10px; border-radius: 6px; }
+
+        /* Chat Profissional */
+        .chat-widget { display: flex; flex-direction: column; height: 450px; }
+        .chat-messages { flex-grow: 1; overflow-y: auto; padding: 10px 5px; display: flex; flex-direction: column; gap: 12px; }
+        .msg { max-width: 85%; padding: 12px 16px; border-radius: 12px; font-size: 0.88rem; line-height: 1.5; }
+        .msg.bot { background: #f1f5f9; color: var(--dark); align-self: flex-start; border-bottom-left-radius: 2px; }
+        .msg.user { background: var(--dark); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+
+        .chat-input-wrapper { display: flex; gap: 10px; margin-top: 20px; padding-top: 15px; border-top: 1px solid #f1f5f9; }
+        .chat-input-wrapper input { background: #f8fafc; border: 1px solid var(--border-color); padding: 12px; border-radius: 8px; flex-grow: 1; font-size: 0.85rem; }
+        .chat-input-wrapper button { padding: 0 20px; background: var(--dark); border-radius: 8px; }
+
+        @media (max-width: 1024px) {
+            .sidebar { width: 70px; padding: 2.5rem 0.5rem; align-items: center; }
+            .sidebar .logo, .nav-item span { display: none; }
+            .main-content { margin-left: 70px; width: calc(100% - 70px); padding: 2rem; }
+            .content-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="logo">NUTRI<strong>ADVANCE</strong></div>
+        <ul class="nav-menu">
+            <li class="nav-item active"><span>Visão Geral</span></li>
+            <li class="nav-item"><span>Plano Nutricional</span></li>
+            <li class="nav-item"><span>Protocolo de Treino</span></li>
+            <li class="nav-item"><span>Análise de Dados</span></li>
+        </ul>
+        <div class="nav-item" onclick="window.location.href='index.html'" style="margin-top: auto;">
+            <span>Sair do Sistema</span>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="header-dash">
+            <div>
+                <p style="color: #64748b; font-size: 0.85rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px;">Bem-vindo de volta</p>
+                <h1><span id="user-name">Usuário</span></h1>
+            </div>
+            <div id="current-date" style="color: #64748b; font-size: 0.9rem; font-weight: 500;"></div>
+        </header>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h4>Ingestão Diária</h4>
+                <div class="value"><span id="kcal-val">0</span> <small style="font-size: 0.85rem; color: #94a3b8;">kcal</small></div>
+                <div class="progress-container"><div class="progress-bar" id="bar-kcal" style="background: var(--primary); width: 0%;"></div></div>
+            </div>
+            <div class="stat-card">
+                <h4>Hidratação</h4>
+                <div class="value">2.4 <small style="font-size: 0.85rem; color: #94a3b8;">/ 3.5 L</small></div>
+                <div class="progress-container"><div class="progress-bar" style="background: var(--accent-blue); width: 68%;"></div></div>
+            </div>
+            <div class="stat-card">
+                <h4>Proteína Isolada</h4>
+                <div class="value">142 <small style="font-size: 0.85rem; color: #94a3b8;">/ 180 g</small></div>
+                <div class="progress-container"><div class="progress-bar" style="background: var(--accent-orange); width: 78%;"></div></div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <section class="left-col">
+                <div class="section-card">
+                    <h3>Prescrição Alimentar</h3>
+                    
+                    <div class="meal-item">
+                        <div class="meal-info">
+                            <strong>Refeição 01</strong>
+                            <small>Omelete (3 ovos), Aveia em flocos e Fruta de época</small>
+                        </div>
+                        <div class="meal-calories">420 kcal</div>
+                    </div>
+
+                    <div class="meal-item">
+                        <div class="meal-info">
+                            <strong>Refeição 02 (Almoço)</strong>
+                            <small>Proteína magra, Arroz integral e Vegetais crucíferos</small>
+                        </div>
+                        <div class="meal-calories">650 kcal</div>
+                    </div>
+
+                    <div class="meal-item">
+                        <div class="meal-info">
+                            <strong>Refeição 03 (Pós-treino)</strong>
+                            <small>Suplemento proteico e Carboidrato de rápida absorção</small>
+                        </div>
+                        <div class="meal-calories">280 kcal</div>
+                    </div>
+                </div>
+
+                <div class="section-card" style="margin-top: 2rem;">
+                    <h3>Protocolo de Treino Atual</h3>
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 12px; border: 1px solid var(--border-color);">
+                        <strong style="display: block; margin-bottom: 5px;">Série A - Ênfase em Cadeia Anterior</strong>
+                        <p style="font-size: 0.85rem; color: #64748b; line-height: 1.4;">Foco técnico: Agachamento, Flexão de braços e Desenvolvimento.</p>
+                        <button class="btn-nav" style="margin-top: 15px; background: var(--dark); color: white; border: none; padding: 8px 16px; border-radius: 6px; font-size: 0.75rem; cursor: pointer;">Acessar Ficha Técnica</button>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="right-col">
+                <div class="section-card chat-widget">
+                    <h3>Consultoria Especializada</h3>
+                    <div class="chat-messages" id="chat-flow">
+                        <div class="msg bot">Olá. Analisei seu log de treinos recente. Como está o nível de fadiga hoje?</div>
+                    </div>
+                    <div class="chat-input-wrapper">
+                        <input type="text" id="user-msg" placeholder="Descreva sua dúvida técnica...">
+                        <button onclick="enviar()" class="btn-nav">
+                            <span style="color: white; font-weight: 700;">→</span>
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <script>
+        // Lógica de Preenchimento de Dados
+        const user = localStorage.getItem('userName') || "Usuário";
+        const kcal = localStorage.getItem('meusKcal') || "2000";
+        
+        document.getElementById('user-name').innerText = user;
+        document.getElementById('kcal-val').innerText = kcal;
+        
+        // Data formatada
+        const options = { weekday: 'long', day: 'numeric', month: 'long' };
+        document.getElementById('current-date').innerText = new Date().toLocaleDateString('pt-BR', options);
+
+        // Animação da barra de progresso
+        setTimeout(() => {
+            document.getElementById('bar-kcal').style.width = "65%";
+        }, 300);
+
+        function enviar() {
+            const input = document.getElementById('user-msg');
+            const flow = document.getElementById('chat-flow');
+            if(input.value.trim()){
+                flow.innerHTML += `<div class="msg user">${input.value}</div>`;
+                input.value = "";
+                flow.scrollTop = flow.scrollHeight;
+
+                setTimeout(() => {
+                    flow.innerHTML += `<div class="msg bot">Sua dúvida foi encaminhada ao especialista. Você receberá uma notificação em breve.</div>`;
+                    flow.scrollTop = flow.scrollHeight;
+                }, 1500);
+            }
+        }
+    </script>
+</body>
+</html>
